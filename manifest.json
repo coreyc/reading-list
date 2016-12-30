@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+
+  "name": "Today I Read",
+  "description": "This extension collects the articles you've read for the day",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "history",
+    "https://ajax.googleapis.com/"
+  ],
+  "background": {
+    "scripts": ["lib/ramda.min.js", "lib/require.js", "lib/bundle.js", "background.js"]
+  }
+}

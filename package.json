@@ -1,0 +1,11 @@
+{
+  "name": "reading-list",
+  "version": "1.0.0",
+  "dependencies": {
+    "ramda-fantasy": "latest"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.1",
+    "data.maybe": "^1.2.2"
+  }
+}
