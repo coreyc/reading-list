@@ -12,9 +12,16 @@
   "permissions": [
     "activeTab",
     "history",
+    "storage",
     "https://ajax.googleapis.com/"
   ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"]
+    }
+  ],
   "background": {
-    "scripts": ["lib/ramda.min.js", "lib/require.js", "lib/bundle.js", "background.js"]
+    "scripts": ["lib/ramda.min.js", "background.js"]
   }
 }

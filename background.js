@@ -1,10 +1,17 @@
-let dict = ['https://www.medium.com', 'https://www.quora.com']
+let dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog']
 
-/*
-1. create list of regexes from url dictionary - working
-2. match history item against regex
-3. print title of page from each matching history item
-*/
+//user-specified url to add to list
+const includeUrl = item => {
+  dict.push(item)
+}
+
+//exclude url from list
+const excludeUrl = (item = '') => {
+  const index = dict.indexOf(item);
+  if (index != -1) {
+    dict.splice(index, 1)
+  }
+}
 
 const strBuilder = (a, b) => {
   return a + '|' + b
@@ -27,19 +34,13 @@ const getTitle = item => {
   console.log(R.prop('title', item))
 }
 
-//TODO: add function for user to add url root to dict
-
-//TODO: add filter function based on user blacklist
-
 const historySearch = () => {
   chrome.history.search({
     'text': '', //empty string returns all
     'maxResults': 1000000
-  }, 
+  },
   historyItems => {
     R.map(getTitle, getMatchedItems(historyItems))
-    // historyItems
-    //   .filter(item => console.log(regexpList(dict).map(regex => regex.exec(item.url))))
   }
 )}
 
