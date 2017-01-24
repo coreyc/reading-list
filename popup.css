@@ -1,0 +1,99 @@
+body {
+    font-size: 100%;
+    margin: 0px;
+    height: 240px;
+    width: 340px;
+    background-color: ghostwhite; 
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Overpass', sans-serif;
+    margin: 0px;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+}
+
+.card {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 90%;
+    height: 80%;
+    margin: 1em;
+    float: left;
+}
+
+.top {
+    height: 30%;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+div.hide-scroll {
+    overflow: hidden;
+}
+
+div.scroll {
+    height: 100%;
+    overflow: auto;
+}
+
+.number-read {
+    width: 100%
+}
+
+.inner-text {
+    float: left;
+    font-size: .5em;
+    width: 10px;
+    margin-left: 3px;
+}
+
+.number {
+    font-size: 2em;
+    color: blue;
+    margin-left: 8px;
+    float: left;
+}
+
+.btn {
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    background-color: dodgerblue;
+    cursor: pointer;
+    padding: 5px 10px;
+    display: inline-block;
+    margin: 15px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.btn-1 {
+    border: 3px solid #fff;
+    color: #fff;
+}
+
+.banner {
+    height: 45px;
+}
+
+.horizontal-separator {
+    width: 100%;
+    border-top: 2px groove white;
+    margin: 2px -2px 2px -2px;
+}

@@ -6,19 +6,17 @@
   "version": "1.0",
 
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "books.png",
     "default_popup": "popup.html"
   },
   "permissions": [
-    "activeTab",
     "history",
-    "storage",
-    "https://ajax.googleapis.com/"
+    "storage"
   ],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["content.js"]
+      "js": ["dist/content.js"] //adding lib/ramda.min.js here did nothing, had to add it to popup.html
     }
   ],
   "background": {

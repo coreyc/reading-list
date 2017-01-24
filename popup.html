@@ -1,40 +1,39 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #extension {
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        width: 300px;
-      }
-    </style>
-
+    <title>Reading List</title>
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
-
-    <script src="content.js"></script>
-    <script src="options.js"></script>
+    <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css?family=Overpass:400i" rel="stylesheet">
   </head>
   <body>
-    <div id="extension">
-      <h2>Reading List</h2>
-      <button id="addCurrentPage">Add current page to list</button>
-      <button id="saveOptions">Save options</button>
+    <div class="banner">
+        <img src="books.png" alt="Reading list logo" class="logo">
+        <h2>Reading List</h2>
     </div>
+    <div class="card hide-scroll">
+        <div id="list-area" class="scroll">
+            <p>asdfasdf</p>
+            <p>asdfadsf</p>
+            <p>asdfadsf</p>
+            <p>adsfadsf</p>
+            <p>asdfadfs</p>
+            <p>asdfadsf</p>
+            <p>fasdfaffff</p>
+        </div>
+    </div>
+    <div class="number">34</div>
+    <div class="inner-text">read today</div>
+    
+    <script src="lib/ramda.min.js"></script>
+    <script src="lib/system-csp-production.js"></script>
+    <script src="system.config.js"></script>
+    <!--<script src="dist/content.js"></script>-->
+    <!--<script src="dist/app.js"></script>-->
   </body>
 </html>
