@@ -3,10 +3,16 @@
 System.register([], function (_export, _context) {
     "use strict";
 
-    var dict, includeUrl, removeUrl, showUrls, getBaseUrl, getTodaysDate, addCurrentPageToDict, limiter, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, getAllHistoryItems, getListLength;
+    var _typeof, dict, includeUrl, removeUrl, getBaseUrl, getTodaysDate, addCurrentPageToDict, limiter, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, getTitlePF, getAllHistoryItems, getListLength;
+
     return {
         setters: [],
         execute: function () {
+            _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+                return typeof obj;
+            } : function (obj) {
+                return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+            };
             dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog', 'topic'];
 
             _export('includeUrl', includeUrl = function includeUrl() {
@@ -22,10 +28,6 @@ System.register([], function (_export, _context) {
                 if (index != -1) {
                     dict.splice(index, 1);
                 }
-            });
-
-            _export('showUrls', showUrls = function showUrls() {
-                return dict;
             });
 
             getBaseUrl = function getBaseUrl() {
@@ -53,11 +55,17 @@ System.register([], function (_export, _context) {
             };
 
             _export('searchChromeHistory', searchChromeHistory = function searchChromeHistory() {
-                chrome.history.search({
-                    'text': '', //empty string returns all,
-                    //'starttime': getTodaysDate(),
-                    'maxResults': 1000000
-                }, getAllHistoryItems);
+                return new Promise(function (resolve, reject) {
+                    chrome.history.search({
+                        'text': '', //empty string returns all,
+                        'startTime': getTodaysDate(),
+                        'maxResults': 1000000
+                    }, function (historyItems) {
+                        var createList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitlePF));
+                        var list = createList(getMatchedItems(historyItems));
+                        resolve(list);
+                    });
+                });
             });
 
             strBuilder = function strBuilder() {
@@ -89,11 +97,15 @@ System.register([], function (_export, _context) {
                 return R.prop('title', item);
             };
 
-            _export('getAllHistoryItems', getAllHistoryItems = function getAllHistoryItems(historyItems) {
+            getTitlePF = R.prop('title');
+
+            _export('getAllHistoryItems', getAllHistoryItems = function getAllHistoryItems(resolve, reject, historyItems) {
+                console.log(typeof historyItems === 'undefined' ? 'undefined' : _typeof(historyItems));
                 var createList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitle));
                 var list = createList(getMatchedItems(historyItems));
 
                 console.log(list);
+                resolve(list);
             });
 
             _export('getListLength', getListLength = function getListLength(historyItems) {
@@ -106,8 +118,6 @@ System.register([], function (_export, _context) {
             _export('includeUrl', includeUrl);
 
             _export('removeUrl', removeUrl);
-
-            _export('showUrls', showUrls);
 
             _export('addCurrentPageToDict', addCurrentPageToDict);
 

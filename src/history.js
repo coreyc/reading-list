@@ -18,8 +18,6 @@ const removeUrl = (item = '') => {
     }
 }
 
-const showUrls = () => dict
-
 const getBaseUrl = () => {
     const splitUrl = window.location.href.split('/')
     const baseUrl = splitUrl[2]
@@ -45,14 +43,24 @@ const limiter = item => {
 }
 
 const searchChromeHistory = () => {
-    chrome.history.search({
-        'text': '', //empty string returns all,
-        //'starttime': getTodaysDate(),
-        'maxResults': 1000000
-    }, getAllHistoryItems)
+    return new Promise((resolve, reject) => {
+        chrome.history.search({
+            'text': '', //empty string returns all,
+            'startTime': getTodaysDate(),
+            'maxResults': 1000000
+        }, historyItems => {
+            const createList = R.compose(
+                R.reduce(listFormatter, ''),
+                R.uniq,
+                R.map(getTitlePF)
+            )
+            const list = createList((getMatchedItems(historyItems)))
+            resolve(list)
+        })
+    })
 }
 
-//////////////Pure functions////////////////
+//////////////(Mostly) pure functions////////////////
 
 const strBuilder = (a = '', b = '') => {
     return a + '|' + b
@@ -78,7 +86,10 @@ const getTitle = item => {
     return R.prop('title', item)
 }
 
-const getAllHistoryItems = historyItems => {
+const getTitlePF = R.prop('title')
+
+const getAllHistoryItems = (resolve, reject, historyItems) => {
+    console.log(typeof historyItems)
     const createList = R.compose(
         R.reduce(listFormatter, ''),
         R.uniq,
@@ -87,6 +98,7 @@ const getAllHistoryItems = historyItems => {
     const list = createList((getMatchedItems(historyItems)))
 
     console.log(list)
+    resolve(list)
 }
 
 const getListLength = historyItems => { 
@@ -103,7 +115,6 @@ const getListLength = historyItems => {
 export {
     includeUrl,
     removeUrl,
-    showUrls,
     addCurrentPageToDict,
     searchChromeHistory,
     getAllHistoryItems,

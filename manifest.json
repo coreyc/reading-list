@@ -16,7 +16,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["dist/content.js"] //adding lib/ramda.min.js here did nothing, had to add it to popup.html
+      "js": ["dist/content.js"], //adding lib/ramda.min.js here did nothing, had to add it to popup.html
+      "run_at": "document_start"
     }
   ],
   "background": {

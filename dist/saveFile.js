@@ -47,11 +47,6 @@ System.register(['./history'], function (_export, _context) {
             searchChromeHistory = _history.searchChromeHistory;
         }],
         execute: function () {
-
-            searchChromeHistory(); // push history urls/titles into array(?)
-            // print array into bullet format
-            // download file
-
             doExportToDisk = function doExportToDisk() {
                 var savedFileEntry = void 0;
 

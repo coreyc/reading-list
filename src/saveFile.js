@@ -4,8 +4,6 @@
 
 import { searchChromeHistory } from './history'
 
-searchChromeHistory()
-
 const doExportToDisk = () => {
     let savedFileEntry
 
