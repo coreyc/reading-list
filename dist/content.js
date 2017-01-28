@@ -3,19 +3,24 @@
 System.register(['./history'], function (_export, _context) {
     "use strict";
 
-    var listFormatter, searchChromeHistory, getAllHistoryItems;
+    var listFormatter, searchChromeHistory;
     return {
         setters: [function (_history) {
             listFormatter = _history.listFormatter;
             searchChromeHistory = _history.searchChromeHistory;
-            getAllHistoryItems = _history.getAllHistoryItems;
         }],
         execute: function () {
 
             searchChromeHistory().then(function (list) {
                 var formattedList = R.reduce(listFormatter, '', list);
 
-                document.getElementById('list-area').innerHTML = formattedList;
+                //R.map(, formattedList)
+
+                list.map(function (listItem) {
+                    document.getElementById('list-area').innerHTML += '<p>' + listItem + '</p>';
+                });
+
+                //document.getElementById('list-area').innerHTML = formattedList
 
                 // escaping the ' character, may need to revisit this in the future if more chars cause encoding issues
                 document.body.innerHTML += "<a class='reading-list' href='data:text;charset=utf-8," + encodeURIComponent(formattedList).replace(/'/g, "%27") + "' download='reading-list'>Download your List</a>";

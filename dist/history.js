@@ -3,7 +3,7 @@
 System.register([], function (_export, _context) {
     "use strict";
 
-    var dict, includeUrl, removeUrl, getBaseUrl, addCurrentPageToDict, getTodaysDate, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, formatList, createList, getAllHistoryItems, limiter;
+    var dict, includeUrl, removeUrl, getBaseUrl, addCurrentPageToDict, getTodaysDate, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, getTitlesFromHistory, createList, limiter;
     return {
         setters: [],
         execute: function () {
@@ -51,8 +51,7 @@ System.register([], function (_export, _context) {
                         'startTime': getTodaysDate(),
                         'maxResults': 1000000
                     }, function (historyItems) {
-                        var createList = R.compose(R.reverse, R.uniq, R.map(getTitle));
-                        var list = createList(getMatchedItems(historyItems));
+                        var list = createList(historyItems);
                         resolve(list);
                     });
                 });
@@ -75,20 +74,14 @@ System.register([], function (_export, _context) {
                 return new RegExp(R.reduce(strBuilder, '', source).slice(1));
             };
 
-            isMatch = R.test(createRegexFromDict(dict));
-            getMatchedItems = R.compose(R.filter(isMatch), R.prop('url'));
+            isMatch = function isMatch(item) {
+                return R.test(createRegexFromDict(dict), item.url);
+            };
+
+            getMatchedItems = R.filter(isMatch);
             getTitle = R.prop('title');
-            formatList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitle));
-            createList = R.compose(formatList, getMatchedItems);
-
-            _export('getAllHistoryItems', getAllHistoryItems = function getAllHistoryItems(resolve, reject, historyItems) {
-
-                var createList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitle));
-                var list = createList(getMatchedItems(historyItems));
-
-                console.log(list);
-                resolve(list);
-            });
+            getTitlesFromHistory = R.compose(R.uniq, R.map(getTitle));
+            createList = R.compose(getTitlesFromHistory, getMatchedItems);
 
             limiter = function limiter(item) {
                 //if get multiple url's like url/page-1, url/page-2 need to limit
@@ -97,8 +90,6 @@ System.register([], function (_export, _context) {
             _export('listFormatter', listFormatter);
 
             _export('searchChromeHistory', searchChromeHistory);
-
-            _export('getAllHistoryItems', getAllHistoryItems);
         }
     };
 });

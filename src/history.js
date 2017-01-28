@@ -40,11 +40,7 @@ const searchChromeHistory = () => {
             'startTime': getTodaysDate(),
             'maxResults': 1000000
         }, historyItems => {
-            const createList = R.compose(
-                R.uniq,
-                R.map(getTitle)
-            )
-            const list = createList((getMatchedItems(historyItems)))
+            const list = createList(historyItems)
             resolve(list)
         })
     })
@@ -72,29 +68,15 @@ const getMatchedItems = R.filter(isMatch)
 
 const getTitle = R.prop('title')
 
-const formatList = R.compose(
-    R.reduce(listFormatter, ''),
+const getTitlesFromHistory = R.compose(
     R.uniq,
     R.map(getTitle)
 )
 
 const createList = R.compose(
-    formatList,
+    getTitlesFromHistory,
     getMatchedItems
 )
-
-const getAllHistoryItems = (resolve, reject, historyItems) => {
-
-    const createList = R.compose(
-        R.reduce(listFormatter, ''),
-        R.uniq,
-        R.map(getTitle)
-    )
-    const list = createList((getMatchedItems(historyItems)))
-
-    console.log(list)
-    resolve(list)
-}
 
 const limiter = item => {
     //if get multiple url's like url/page-1, url/page-2 need to limit
@@ -102,6 +84,5 @@ const limiter = item => {
 
 export {
     listFormatter,
-    searchChromeHistory,
-    getAllHistoryItems  
+    searchChromeHistory  
 }
