@@ -1,16 +1,14 @@
 'use strict';
 
-System.register(['./content', './history', './saveFile', './userPrefs'], function (_export, _context) {
+System.register(['./content', './history', './userPrefs'], function (_export, _context) {
   "use strict";
 
-  var content, history, saveFile, userPrefs;
+  var content, history, userPrefs;
   return {
     setters: [function (_content) {
       content = _content;
     }, function (_history) {
       history = _history;
-    }, function (_saveFile) {
-      saveFile = _saveFile;
     }, function (_userPrefs) {
       userPrefs = _userPrefs;
     }],

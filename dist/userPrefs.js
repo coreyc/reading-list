@@ -9,7 +9,7 @@ System.register([], function (_export, _context) {
         execute: function () {
             saveOptions = function saveOptions() {
                 chrome.storage.sync.set({
-                    deliveryFrequency: 'daily', //use duck typing for types (i.e. - daily, weekly, monthly?)
+                    deliveryFrequency: 'daily',
                     publishingAccount: '' // will be used for later if add ability to publish to Twitter
                 }, function () {
                     console.log('Options saved');
@@ -21,11 +21,6 @@ System.register([], function (_export, _context) {
                     console.log('data', data);
                 });
             };
-
-            document.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('saveOptions').addEventListener('click', saveOptions);
-                document.getElementById('getOptions').addEventListener('click', getOptions);
-            });
         }
     };
 });

@@ -1,16 +1,11 @@
-//either use a 3rd party API here to get blog/journal/article related sites, OR
-//include all and remove facebook, twitter, instagram, amazon, etc, OR 
-//check for more than two words in url
 let dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog', 'topic']
 
 //////////////Impure functions/////////////////
 
-//user-specified url to add to list
 const includeUrl = (item = '') => {
     dict.push(item)
 }
 
-//remove url from list
 const removeUrl = (item = '') => {
     const index = dict.indexOf(item)
     if (index != -1) {
@@ -28,18 +23,14 @@ const getBaseUrl = () => {
     return baseUrl
 }
 
-const getTodaysDate = () => {
-    const date = new Date()
-    date.setHours(0,0,0,0)
-    return date.getTime()
-}
-
 const addCurrentPageToDict = () => {
     dict.push(getBaseUrl())
 }
 
-const limiter = item => {
-    //if get multiple url's like url-page-1, url-page-2 need to limit
+const getTodaysDate = () => {
+    const date = new Date()
+    date.setHours(0,0,0,0)
+    return date.getTime()
 }
 
 const searchChromeHistory = () => {
@@ -50,9 +41,8 @@ const searchChromeHistory = () => {
             'maxResults': 1000000
         }, historyItems => {
             const createList = R.compose(
-                R.reduce(listFormatter, ''),
                 R.uniq,
-                R.map(getTitlePF)
+                R.map(getTitle)
             )
             const list = createList((getMatchedItems(historyItems)))
             resolve(list)
@@ -82,11 +72,22 @@ const getMatchedItems = items => {
     return R.filter(isMatch, items)
 }
 
-const getTitle = item => {
-    return R.prop('title', item)
-}
+// const getTitle = item => {
+//     return R.prop('title', item)
+// }
 
-const getTitlePF = R.prop('title')
+const getTitle = R.prop('title')
+
+const formatList = R.compose(
+    R.reduce(listFormatter, ''),
+    R.uniq,
+    R.map(getTitle)
+)
+
+const createList = R.compose(
+    formatList,
+    getMatchedItems
+)
 
 const getAllHistoryItems = (resolve, reject, historyItems) => {
     console.log(typeof historyItems)
@@ -101,22 +102,12 @@ const getAllHistoryItems = (resolve, reject, historyItems) => {
     resolve(list)
 }
 
-const getListLength = historyItems => { 
-    R.compose(
-        R.length,
-        R.uniq,
-        R.map(getTitle)
-    )
-
-    const listLength = getListLength(getMatchedItems(historyItems))
-    console.log(listLength)
+const limiter = item => {
+    //if get multiple url's like url/page-1, url/page-2 need to limit
 }
 
 export {
-    includeUrl,
-    removeUrl,
-    addCurrentPageToDict,
+    listFormatter,
     searchChromeHistory,
-    getAllHistoryItems,
-    getListLength    
+    getAllHistoryItems  
 }

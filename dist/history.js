@@ -3,7 +3,7 @@
 System.register([], function (_export, _context) {
     "use strict";
 
-    var _typeof, dict, includeUrl, removeUrl, getBaseUrl, getTodaysDate, addCurrentPageToDict, limiter, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, getTitlePF, getAllHistoryItems, getListLength;
+    var _typeof, dict, includeUrl, removeUrl, getBaseUrl, addCurrentPageToDict, getTodaysDate, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, formatList, createList, getAllHistoryItems, limiter;
 
     return {
         setters: [],
@@ -15,20 +15,20 @@ System.register([], function (_export, _context) {
             };
             dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog', 'topic'];
 
-            _export('includeUrl', includeUrl = function includeUrl() {
+            includeUrl = function includeUrl() {
                 var item = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
                 dict.push(item);
-            });
+            };
 
-            _export('removeUrl', removeUrl = function removeUrl() {
+            removeUrl = function removeUrl() {
                 var item = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
                 var index = dict.indexOf(item);
                 if (index != -1) {
                     dict.splice(index, 1);
                 }
-            });
+            };
 
             getBaseUrl = function getBaseUrl() {
                 var splitUrl = window.location.href.split('/');
@@ -40,18 +40,14 @@ System.register([], function (_export, _context) {
                 return baseUrl;
             };
 
+            addCurrentPageToDict = function addCurrentPageToDict() {
+                dict.push(getBaseUrl());
+            };
+
             getTodaysDate = function getTodaysDate() {
                 var date = new Date();
                 date.setHours(0, 0, 0, 0);
                 return date.getTime();
-            };
-
-            _export('addCurrentPageToDict', addCurrentPageToDict = function addCurrentPageToDict() {
-                dict.push(getBaseUrl());
-            });
-
-            limiter = function limiter(item) {
-                //if get multiple url's like url-page-1, url-page-2 need to limit
             };
 
             _export('searchChromeHistory', searchChromeHistory = function searchChromeHistory() {
@@ -61,7 +57,7 @@ System.register([], function (_export, _context) {
                         'startTime': getTodaysDate(),
                         'maxResults': 1000000
                     }, function (historyItems) {
-                        var createList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitlePF));
+                        var createList = R.compose(R.uniq, R.map(getTitle));
                         var list = createList(getMatchedItems(historyItems));
                         resolve(list);
                     });
@@ -75,9 +71,9 @@ System.register([], function (_export, _context) {
                 return a + '|' + b;
             };
 
-            listFormatter = function listFormatter(a, b) {
+            _export('listFormatter', listFormatter = function listFormatter(a, b) {
                 return a + '\n' + b;
-            };
+            });
 
             createRegexFromDict = function createRegexFromDict() {
                 var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -93,11 +89,9 @@ System.register([], function (_export, _context) {
                 return R.filter(isMatch, items);
             };
 
-            getTitle = function getTitle(item) {
-                return R.prop('title', item);
-            };
-
-            getTitlePF = R.prop('title');
+            getTitle = R.prop('title');
+            formatList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitle));
+            createList = R.compose(formatList, getMatchedItems);
 
             _export('getAllHistoryItems', getAllHistoryItems = function getAllHistoryItems(resolve, reject, historyItems) {
                 console.log(typeof historyItems === 'undefined' ? 'undefined' : _typeof(historyItems));
@@ -108,24 +102,15 @@ System.register([], function (_export, _context) {
                 resolve(list);
             });
 
-            _export('getListLength', getListLength = function getListLength(historyItems) {
-                R.compose(R.length, R.uniq, R.map(getTitle));
+            limiter = function limiter(item) {
+                //if get multiple url's like url/page-1, url/page-2 need to limit
+            };
 
-                var listLength = getListLength(getMatchedItems(historyItems));
-                console.log(listLength);
-            });
-
-            _export('includeUrl', includeUrl);
-
-            _export('removeUrl', removeUrl);
-
-            _export('addCurrentPageToDict', addCurrentPageToDict);
+            _export('listFormatter', listFormatter);
 
             _export('searchChromeHistory', searchChromeHistory);
 
             _export('getAllHistoryItems', getAllHistoryItems);
-
-            _export('getListLength', getListLength);
         }
     };
 });
