@@ -2,7 +2,6 @@ import { listFormatter, searchChromeHistory, getAllHistoryItems  } from './histo
 
 searchChromeHistory().then(list => {
     const formattedList = R.reduce(listFormatter, '', list)
-    console.log('list: ', formattedList)
     
     document.getElementById('list-area').innerHTML = formattedList
     

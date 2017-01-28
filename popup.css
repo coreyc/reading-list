@@ -27,6 +27,7 @@ h2 {
     height: 80%;
     margin: 1em;
     float: left;
+    font-size: .75em;
 }
 
 .top {
@@ -67,30 +68,6 @@ div.scroll {
     color: blue;
     margin-left: 8px;
     float: left;
-}
-
-.btn {
-    border: none;
-    font-family: inherit;
-    font-size: inherit;
-    background-color: dodgerblue;
-    cursor: pointer;
-    padding: 5px 10px;
-    display: inline-block;
-    margin: 15px 30px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    outline: none;
-    position: relative;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
-.btn-1 {
-    border: 3px solid #fff;
-    color: #fff;
 }
 
 .banner {

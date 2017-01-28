@@ -3,16 +3,10 @@
 System.register([], function (_export, _context) {
     "use strict";
 
-    var _typeof, dict, includeUrl, removeUrl, getBaseUrl, addCurrentPageToDict, getTodaysDate, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, formatList, createList, getAllHistoryItems, limiter;
-
+    var dict, includeUrl, removeUrl, getBaseUrl, addCurrentPageToDict, getTodaysDate, searchChromeHistory, strBuilder, listFormatter, createRegexFromDict, isMatch, getMatchedItems, getTitle, formatList, createList, getAllHistoryItems, limiter;
     return {
         setters: [],
         execute: function () {
-            _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-                return typeof obj;
-            } : function (obj) {
-                return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-            };
             dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog', 'topic'];
 
             includeUrl = function includeUrl() {
@@ -57,7 +51,7 @@ System.register([], function (_export, _context) {
                         'startTime': getTodaysDate(),
                         'maxResults': 1000000
                     }, function (historyItems) {
-                        var createList = R.compose(R.uniq, R.map(getTitle));
+                        var createList = R.compose(R.reverse, R.uniq, R.map(getTitle));
                         var list = createList(getMatchedItems(historyItems));
                         resolve(list);
                     });
@@ -81,20 +75,14 @@ System.register([], function (_export, _context) {
                 return new RegExp(R.reduce(strBuilder, '', source).slice(1));
             };
 
-            isMatch = function isMatch(item) {
-                return R.test(createRegexFromDict(dict), item.url);
-            };
-
-            getMatchedItems = function getMatchedItems(items) {
-                return R.filter(isMatch, items);
-            };
-
+            isMatch = R.test(createRegexFromDict(dict));
+            getMatchedItems = R.compose(R.filter(isMatch), R.prop('url'));
             getTitle = R.prop('title');
             formatList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitle));
             createList = R.compose(formatList, getMatchedItems);
 
             _export('getAllHistoryItems', getAllHistoryItems = function getAllHistoryItems(resolve, reject, historyItems) {
-                console.log(typeof historyItems === 'undefined' ? 'undefined' : _typeof(historyItems));
+
                 var createList = R.compose(R.reduce(listFormatter, ''), R.uniq, R.map(getTitle));
                 var list = createList(getMatchedItems(historyItems));
 

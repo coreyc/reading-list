@@ -68,13 +68,7 @@ const isMatch = item => {
     return R.test(createRegexFromDict(dict), item.url)
 }
 
-const getMatchedItems = items => {
-    return R.filter(isMatch, items)
-}
-
-// const getTitle = item => {
-//     return R.prop('title', item)
-// }
+const getMatchedItems = R.filter(isMatch)
 
 const getTitle = R.prop('title')
 
@@ -90,7 +84,7 @@ const createList = R.compose(
 )
 
 const getAllHistoryItems = (resolve, reject, historyItems) => {
-    console.log(typeof historyItems)
+
     const createList = R.compose(
         R.reduce(listFormatter, ''),
         R.uniq,

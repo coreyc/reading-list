@@ -14,7 +14,6 @@ System.register(['./history'], function (_export, _context) {
 
             searchChromeHistory().then(function (list) {
                 var formattedList = R.reduce(listFormatter, '', list);
-                console.log('list: ', formattedList);
 
                 document.getElementById('list-area').innerHTML = formattedList;
 
