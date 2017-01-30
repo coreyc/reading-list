@@ -1,4 +1,7 @@
-let dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog', 'topic']
+import R from 'ramda'
+
+let dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 
+    'blog', 'topic', 'story', 'article']
 
 //////////////Impure functions/////////////////
 

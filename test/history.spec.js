@@ -1,12 +1,10 @@
-const history = require('../dist/history.js')
-const expect = require('expect.js')
+import { listFormatter, searchChromeHistory } from '../src/history.js'
+import expect from 'expect.js'
 
 describe('HISTORY', () => {
-    describe('#includeUrl', () => {
-        it('should add "www.abc.com" to dict', () => {
-            let dict = ['cnn.com', 'medium.com']
-            history.includeUrl('www.abc.com')
-            expect(dict).to.include('www.abc.com')
+    describe('#listFormatter', () => {
+        it('should run', () => {
+            expect(2).to.equal(2)
         })
     })
 })

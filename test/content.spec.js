@@ -1,5 +1,5 @@
-const content = require ('../dist/content.js')
-const assert = require('assert')
+// const assert = require('assert')
+import * as history from '../src/history'
 
 
 

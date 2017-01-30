@@ -7,7 +7,7 @@ System.register([], function (_export, _context) {
     return {
         setters: [],
         execute: function () {
-            dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog', 'topic'];
+            dict = ['medium.com', 'quora.com', 'nytimes.com', 'cnn.com', 'newsweek.com', 'blog', 'topic', 'story', 'article'];
 
             includeUrl = function includeUrl() {
                 var item = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
