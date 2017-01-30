@@ -79,13 +79,9 @@
 	(0, _history.searchChromeHistory)().then(function (list) {
 	    var formattedList = R.reduce(_history.listFormatter, '', list);
 	
-	    //R.map(, formattedList)
-	
 	    list.map(function (listItem) {
 	        document.getElementById('list-area').innerHTML += '<p>' + listItem + '</p>';
 	    });
-	
-	    //document.getElementById('list-area').innerHTML = formattedList
 	
 	    // escaping the ' character, may need to revisit this in the future if more chars cause encoding issues
 	    document.body.innerHTML += "<a class='reading-list' href='data:text;charset=utf-8," + encodeURIComponent(formattedList).replace(/'/g, "%27") + "' download='reading-list'>Download your List</a>";
