@@ -2,7 +2,7 @@
   "name": "reading-list",
   "version": "1.0.0",
   "dependencies": {
-    "ramda-fantasy": "latest"
+    "ramda": "latest"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
